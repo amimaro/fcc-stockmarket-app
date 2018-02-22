@@ -1,5 +1,6 @@
 const Controller = require('../../lib/controller');
 const stock = require('./facade');
+var rp = require('request-promise');
 
 const stockApi = 'https://www.alphavantage.co/query?';
 const timeframe = {
@@ -16,10 +17,16 @@ const timeframe = {
 class Stock extends Controller {
 
   stockTimeSeries(req, res, next) {
-    console.log('Interval: ' + req.params.interval)
-    console.log('Symbol: ' + req.params.symbol)
     console.log(stockApi + timeframe[req.params.interval] + req.params.symbol)
-    res.sendStatus(204);
+    rp(stockApi + timeframe[req.params.interval] + req.params.symbol)
+    .then(function (data) {
+        console.log(data);
+        res.status(200).json(JSON.parse(data));
+    })
+    .catch(function (err) {
+        console.error(err);
+        res.sendStatus(404)
+    });
   }
 
 }
