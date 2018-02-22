@@ -17,15 +17,16 @@ const timeframe = {
 class Stock extends Controller {
 
   stockTimeSeries(req, res, next) {
-    console.log(stockApi + timeframe[req.params.interval] + req.params.symbol)
-    rp(stockApi + timeframe[req.params.interval] + req.params.symbol)
+    let url = stockApi + timeframe[req.params.interval] + req.params.symbol;
+    console.log(url);
+    rp(url)
     .then(function (data) {
         console.log(data);
         res.status(200).json(JSON.parse(data));
     })
     .catch(function (err) {
         console.error(err);
-        res.sendStatus(404)
+        res.sendStatus(404);
     });
   }
 
