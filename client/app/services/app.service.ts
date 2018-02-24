@@ -17,9 +17,20 @@ export class AppService {
     this.getStock('d1', symbol)
       .subscribe(
       res => {
-        console.log(res);
+        if (res.hasOwnProperty('Error Message')) {
+          console.log('Symbol doesn\'t exists');
+        } else {
+          console.log('Symbol exists');
+          if (!this.symbols.includes(symbol.toUpperCase())) {
+            this.symbols.push(symbol.toUpperCase());
+            alert('Symbol Added');
+          } else {
+            alert('Symbol Already Added');
+          }
+        }
       },
       err => {
+        console.error('Error: ')
         console.error(err);
       })
   }

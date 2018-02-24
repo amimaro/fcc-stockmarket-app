@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AppService } from '../../services/app.service';
+
 import { Chart } from 'chart.js';
 
 @Component({
@@ -10,10 +12,16 @@ import { Chart } from 'chart.js';
 export class HomeComponent implements OnInit {
 
   chart: any;
+  inputSymbol: string = "";
 
-  constructor() { }
+  constructor(public appService: AppService) { }
 
   ngOnInit() {
+  }
+
+  addSymbol() {
+    this.appService.addSymbol(this.inputSymbol);
+    this.inputSymbol = "";
   }
 
   setupChart() {
