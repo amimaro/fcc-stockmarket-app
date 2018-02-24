@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class AppService {
 
-  symbols: any[] = [];
+  symbols: any[] = ['MSFT','TEST'];
   apiUrl: string = 'http://localhost:8080/api/stock/';
 
   constructor(private http: HttpClient) { }
@@ -33,6 +33,11 @@ export class AppService {
         console.error('Error: ')
         console.error(err);
       })
+  }
+
+  removeSymbol(index) {
+    alert(this.symbols[index] + ' Removed')
+    this.symbols.splice(index, 1);
   }
 
 }

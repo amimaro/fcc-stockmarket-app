@@ -6,9 +6,7 @@
       <div class="content">
         <div class="field has-addons">
           <div class="control" style="width: 100%">
-            <input type="text" class="input is-info is-medium"
-            [(ngModel)]="inputSymbol" (keyup.enter)="addSymbol()"
-            placeholder="Input Stock Symbol">
+            <input type="text" class="input is-info is-medium" [(ngModel)]="inputSymbol" (keyup.enter)="addSymbol()" placeholder="Input Stock Symbol">
           </div>
           <div class="control">
             <a class="button is-success is-medium" (click)="addSymbol()">Add</a>
@@ -21,8 +19,10 @@
 
 <h3 class="subtitle" *ngIf="appService.symbols.length > 0">Symbols Added</h3>
 <div class="columns is-multiline is-mobile has-text-centered">
-  <div class="column is-one-quarter" *ngFor="let symbol of appService.symbols">
-    <span>{{symbol}}</span>
-    <span class="icon"><i class="fa fa-times"></i></span>
+  <div class="column is-one-quarter" *ngFor="let symbol of appService.symbols; let i = index">
+    <div class="box">
+      <span>{{symbol}}</span>
+      <span class="icon" (click)="removeSymbol(i)"><i class="fa fa-times"></i></span>
+    </div>
   </div>
 </div>

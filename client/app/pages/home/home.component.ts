@@ -24,6 +24,10 @@ export class HomeComponent implements OnInit {
     this.inputSymbol = "";
   }
 
+  removeSymbol(index) {
+    this.appService.removeSymbol(index);
+  }
+
   setupChart() {
     this.chart = new Chart('canvas', {
       type: 'bar',
