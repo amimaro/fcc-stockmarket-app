@@ -1,4 +1,18 @@
-<canvas id="canvas">{{ chart }}</canvas>
+<div class="box">
+  <p>Interval</p>
+  <a class="button" (click)="setInterval('m1')">1m</a>
+  <a class="button" (click)="setInterval('m5')">5m</a>
+  <a class="button" (click)="setInterval('m15')">15m</a>
+  <a class="button" (click)="setInterval('m30')">30m</a>
+  <a class="button" (click)="setInterval('h1')">1h</a>
+  <a class="button" (click)="setInterval('d1')">1d</a>
+  <a class="button" (click)="setInterval('w1')">1w</a>
+  <a class="button" (click)="setInterval('mn')">mn</a>
+</div>
+
+<div class="box">
+  <canvas id="canvas">{{ chart }}</canvas>
+</div>
 
 <div class="box">
   <article class="media">

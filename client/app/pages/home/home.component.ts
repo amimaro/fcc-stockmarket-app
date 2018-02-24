@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   constructor(public appService: AppService) { }
 
   ngOnInit() {
+    // this.setupChart()
   }
 
   addSymbol() {
@@ -28,9 +29,14 @@ export class HomeComponent implements OnInit {
     this.appService.removeSymbol(index);
   }
 
+  setInterval(interval) {
+    this.appService.setInterval(interval);
+  }
+
   setupChart() {
+
     this.chart = new Chart('canvas', {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: 'this.poll.options',
         datasets: [{
@@ -62,10 +68,20 @@ export class HomeComponent implements OnInit {
   }
 
   addData() {
-    let count =  0 //this.poll.count;
+    let count = 0 //this.poll.count;
     // count[this.option]++
     this.chart.data.datasets[0].data = count;
     this.chart.update();
+    // if (config.data.datasets.length > 0) { config is chart
+    //             var month = MONTHS[config.data.labels.length % MONTHS.length];
+    //             config.data.labels.push(month);
+    //
+    //             config.data.datasets.forEach(function(dataset) {
+    //                 dataset.data.push(randomScalingFactor());
+    //             });
+    //
+    //             window.myLine.update();
+    //         }
   }
 
 }

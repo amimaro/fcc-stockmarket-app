@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AppService {
 
   symbols: any[] = [];
+  interval: string = 'd1';
   apiUrl: string = 'http://localhost:8080/api/stock/';
 
   constructor(private http: HttpClient) {
@@ -16,16 +17,20 @@ export class AppService {
     }
   }
 
-  getStock(interval = 'd1', symbol = 'MSFT') {
-    return this.http.get(this.apiUrl + interval + '/' + symbol);
+  getStock(symbol) {
+    return this.http.get(this.apiUrl + this.interval + '/' + symbol);
   }
 
   isLocalEmpty() {
     return localStorage.getItem("stock-local") === 'undefined' || localStorage.getItem("stock-local") === null;
   }
 
+  setInterval(interval) {
+    this.interval = interval;
+  }
+
   addSymbol(symbol) {
-    this.getStock('d1', symbol)
+    this.getStock(symbol)
       .subscribe(
       res => {
         if (res.hasOwnProperty('Error Message')) {
