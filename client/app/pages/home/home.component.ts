@@ -13,6 +13,8 @@ export class HomeComponent implements OnInit {
 
   chart: any;
   inputSymbol: string = "";
+  begin: string = "";
+  end: string = "";
 
   constructor(public appService: AppService) { }
 

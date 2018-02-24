@@ -8,6 +8,9 @@
   <a class="button" (click)="setInterval('d1')">1d</a>
   <a class="button" (click)="setInterval('w1')">1w</a>
   <a class="button" (click)="setInterval('mn')">mn</a>
+  <div class="pull-right" *ngIf="begin.length > 0 && end.length > 0">
+    From {{begin}} to {{end}}
+  </div>
 </div>
 
 <div class="box">
