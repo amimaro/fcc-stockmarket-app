@@ -11,8 +11,8 @@ const mongoose   = require('mongoose');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 
-mongoose.Promise = bluebird
-mongoose.connect(configDB.mongo.url)
+// mongoose.Promise = bluebird
+// mongoose.connect(configDB.mongo.url)
 
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
