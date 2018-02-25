@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../services/app.service';
 
 import { Chart } from 'chart.js';
+import * as randomColor from 'randomcolor';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +16,104 @@ export class HomeComponent implements OnInit {
   inputSymbol: string = "";
   begin: string = "";
   end: string = "";
+  time: any[] = [];
+  info: string = "";
+
+  dataset: any = {};
 
   constructor(public appService: AppService) { }
 
   ngOnInit() {
-    // this.setupChart()
+    this.setupChart();
+
+    this.getDataset('MSFT')
+    this.getDataset('AMZN')
+  }
+
+  setupChart() {
+
+    this.chart = new Chart('canvas', {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: []
+      },
+      options: {
+        responsive: true,
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Month'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Value'
+            }
+          }]
+        }
+      }
+    });
+  }
+
+  getDataset(symbol) {
+    this.appService.getStock(symbol)
+      .subscribe(
+      res => {
+        console.log(res);
+        this.info = res['Meta Data']['1. Information']
+        let symbol = res['Meta Data']['2. Symbol'];
+        let data = Object.values(res)[1];
+        let prices = [];
+        let color = this.getColor();
+
+        this.time = Object.keys(data).reverse();
+        this.begin = this.time[0];
+        this.end = this.time[99];
+
+        // Get just close price
+        Object.values(data).map((val) => {
+          prices.push(val['4. close'])
+        });
+        prices.reverse()
+
+        this.dataset = {
+          data: prices,
+          label: symbol,
+          borderColor: color,
+          backgroundColor: color,
+          fill: false,
+        }
+
+        this.addDataset(this.dataset);
+      },
+      err => {
+
+      })
+  }
+
+  resetChart() {
+    this.chart.data.labels = [];
+    this.chart.data.datasets = [];
+    this.chart.update();
+  }
+
+  addDataset(dataset) {
+    this.chart.data.labels = this.time;
+    this.chart.data.datasets.push(dataset);
+    this.chart.update();
   }
 
   addSymbol() {
@@ -35,55 +129,11 @@ export class HomeComponent implements OnInit {
     this.appService.setInterval(interval);
   }
 
-  setupChart() {
-
-    this.chart = new Chart('canvas', {
-      type: 'line',
-      data: {
-        labels: 'this.poll.options',
-        datasets: [{
-          data: 'this.poll.count',
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        },
-        legend: {
-          display: false
-        },
-      }
+  getColor() {
+    return randomColor({
+      luminosity: 'bright',
+      format: 'rgb'
     });
-  }
-
-  addData() {
-    let count = 0 //this.poll.count;
-    // count[this.option]++
-    this.chart.data.datasets[0].data = count;
-    this.chart.update();
-    // if (config.data.datasets.length > 0) { config is chart
-    //             var month = MONTHS[config.data.labels.length % MONTHS.length];
-    //             config.data.labels.push(month);
-    //
-    //             config.data.datasets.forEach(function(dataset) {
-    //                 dataset.data.push(randomScalingFactor());
-    //             });
-    //
-    //             window.myLine.update();
-    //         }
   }
 
 }
