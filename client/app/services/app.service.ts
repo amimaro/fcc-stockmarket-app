@@ -6,7 +6,8 @@ export class AppService {
 
   symbols: any[] = [];
   interval: string = 'd1';
-  apiUrl: string = 'http://localhost:8080/api/stock/';
+  // apiUrl: string = 'http://localhost:8080/api/stock/';
+  apiUrl: string = 'https://fcc-stockmarket-app.herokuapp.com/api/stock/';
 
   constructor(private http: HttpClient) {
     if (this.isLocalEmpty()) {
