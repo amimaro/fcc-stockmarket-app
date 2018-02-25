@@ -25,13 +25,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.setupChart();
-
-    this.getDataset('MSFT')
-    this.getDataset('AMZN')
+    this.appService.symbols.map((symbol) => {
+      this.getDataset(symbol)
+    })
   }
 
   setupChart() {
-
     this.chart = new Chart('canvas', {
       type: 'line',
       data: {
@@ -116,13 +115,20 @@ export class HomeComponent implements OnInit {
     this.chart.update();
   }
 
+  removeDataset(index) {
+    this.chart.data.datasets.splice(index, 1);
+    this.chart.update();
+  }
+
   addSymbol() {
     this.appService.addSymbol(this.inputSymbol);
+    this.getDataset(this.inputSymbol)
     this.inputSymbol = "";
   }
 
   removeSymbol(index) {
     this.appService.removeSymbol(index);
+    this.removeDataset(index);
   }
 
   setInterval(interval) {
