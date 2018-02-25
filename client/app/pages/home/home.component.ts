@@ -25,9 +25,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.setupChart();
-    this.appService.symbols.map((symbol) => {
-      this.getDataset(symbol)
-    })
+    this.buildChart();
   }
 
   setupChart() {
@@ -67,6 +65,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  buildChart() {
+    this.appService.symbols.map((symbol) => {
+      this.getDataset(symbol)
+    })
+  }
+
   getDataset(symbol) {
     this.appService.getStock(symbol)
       .subscribe(
@@ -80,7 +84,7 @@ export class HomeComponent implements OnInit {
 
         this.time = Object.keys(data).reverse();
         this.begin = this.time[0];
-        this.end = this.time[99];
+        this.end = this.time[this.time.length-1];
 
         // Get just close price
         Object.values(data).map((val) => {
@@ -133,6 +137,8 @@ export class HomeComponent implements OnInit {
 
   setInterval(interval) {
     this.appService.setInterval(interval);
+    this.resetChart();
+    this.buildChart();
   }
 
   getColor() {
