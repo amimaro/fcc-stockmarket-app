@@ -1,6 +1,6 @@
-## FreeCodeCamp - Backend Challenges
-## Dynamic Web Application Projects: [Chart the Stock Market](https://www.freecodecamp.org/challenges/chart-the-stock-market)
 ## fcc-stockmarket-app
+## freeCodeCamp - Backend Challenges
+## Dynamic Web Application Projects: [Chart the Stock Market](https://www.freecodecamp.org/challenges/chart-the-stock-market)
 
 ### Getting started
 
